@@ -26,13 +26,15 @@ export enum Terrain {
 class LevelBuilder {
     width: number;
     height: number;
+    palette: string;
     tileSize = 64;
     tiles: number[];
     entities: EntityData[] = [];
 
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number, palette: string = 'grass') {
         this.width = width;
         this.height = height;
+        this.palette = palette;
         this.tiles = new Array(width * height).fill(0);
     }
 
@@ -127,11 +129,16 @@ class LevelBuilder {
         this.addEntity('spikeBall', x, y, { range, direction });
     }
 
+    addDecoration(x: number, y: number, frame: string) {
+        this.addEntity('decoration', x, y, { frame });
+    }
+
     build() {
         return {
             width: this.width,
             height: this.height,
             tileSize: this.tileSize,
+            palette: this.palette,
             tiles: this.tiles,
             entities: this.entities
         };
@@ -139,13 +146,16 @@ class LevelBuilder {
 }
 
 function genLevel1() {
-    const builder = new LevelBuilder(160, 15);
+    const builder = new LevelBuilder(160, 15, 'grass');
     
     // ==================
     // PHASE 1: 0-40 (The Basics)
     // ==================
     // Flat start
     builder.fillFloor(12, 0, 8);
+    builder.addDecoration(0, 11, 'fence');
+    builder.addDecoration(3, 11, 'mushroom_red');
+    builder.addDecoration(7, 11, 'fence');
     builder.addEntity('playerSpawn', 2, 8);
     
     // Slope down
@@ -245,7 +255,7 @@ function genLevel1() {
 }
 
 function genLevel2() {
-    const builder = new LevelBuilder(160, 15);
+    const builder = new LevelBuilder(160, 15, 'snow');
     
     // ==================
     // PHASE 1: 0-40 (Blue Factory)
@@ -312,9 +322,9 @@ function genLevel2() {
 
     // Vertical climb using a ladder instead of just jump pads
     builder.addLadder(90, 8, 4); // 90, 8 to 11
-    builder.addPlatform(89, 12, 3);
     
-    builder.addPlatform(90, 8, 3);
+    // Platform to step onto from the ladder
+    builder.addPlatform(91, 8, 3);
     builder.addEntity('jumpPad', 91, 7);
     builder.addPlatform(95, 4, 3);
     
@@ -352,12 +362,14 @@ function genLevel2() {
 }
 
 function genLevel3() {
-    const builder = new LevelBuilder(160, 15);
+    const builder = new LevelBuilder(160, 15, 'stone');
     
     // ==================
     // PHASE 1: 0-40 (Slopes & Keys)
     // ==================
     builder.fillFloor(12, 0, 5);
+    builder.addDecoration(0, 11, 'fence');
+    builder.addDecoration(4, 11, 'fence');
     builder.addEntity('playerSpawn', 2, 8);
     
     // Ramp up

@@ -101,7 +101,8 @@ export class Player extends Phaser.Physics.Matter.Sprite {
       onUpdate: (_tween, target) => {
         // Flash white on the dim frames
         if (target.alpha < 0.7) {
-          target.setTintFill(0xffffff);
+          if (target.setTintFill) target.setTintFill(0xffffff);
+          else target.setTint(0xffffff);
         } else {
           target.clearTint();
         }

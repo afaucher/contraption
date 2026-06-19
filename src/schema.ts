@@ -4,6 +4,7 @@ export interface LevelData {
   tileSize: number;
   tiles: number[]; // 1D array of length width * height. 0 = empty. >0 = tile ID.
   entities: EntityData[];
+  palette?: string; // e.g. 'grass', 'snow', 'sand', 'stone', 'purple'
 }
 
 export interface EntityData {
@@ -29,8 +30,10 @@ export type EntityType =
   | 'gem'
   | 'button' // e.g. blue button that removes blue blocks
   | 'coloredBlock' // e.g. blue blocks that disappear
-  | 'teleporter';
+  | 'teleporter'
+  | 'decoration'; // purely visual, non-colliding
 
 // Common Properties examples:
 // door, key, flag, button, coloredBlock: { color: 'red' | 'blue' | 'green' }
 // weight: { triggerDistance: number }
+// decoration: { frame: string }

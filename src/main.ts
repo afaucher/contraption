@@ -17,7 +17,8 @@ const config: Phaser.Types.Core.GameConfig = {
     default: 'matter',
     matter: {
       gravity: { x: 0, y: 1 },
-      debug: false
+      debug: false,
+      enableSleeping: false
     }
   },
   scene: [BootScene, MenuScene, GameScene, UIScene, VictoryScene],

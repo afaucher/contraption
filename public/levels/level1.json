@@ -2,6 +2,7 @@
   "width": 160,
   "height": 15,
   "tileSize": 64,
+  "palette": "grass",
   "tiles": [
     0,
     0,
@@ -2405,6 +2406,30 @@
     16
   ],
   "entities": [
+    {
+      "type": "decoration",
+      "x": 0,
+      "y": 11,
+      "properties": {
+        "frame": "fence"
+      }
+    },
+    {
+      "type": "decoration",
+      "x": 3,
+      "y": 11,
+      "properties": {
+        "frame": "mushroom_red"
+      }
+    },
+    {
+      "type": "decoration",
+      "x": 7,
+      "y": 11,
+      "properties": {
+        "frame": "fence"
+      }
+    },
     {
       "type": "playerSpawn",
       "x": 2,

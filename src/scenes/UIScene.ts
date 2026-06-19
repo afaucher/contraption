@@ -10,6 +10,10 @@ export class UIScene extends Phaser.Scene {
   }
 
   create() {
+    this.scoreSprites = [];
+    this.heartSprites = [];
+    this.keySprites = [];
+
     // Score icon
     this.add.sprite(40, 40, 'tiles', 'hud_coin').setScale(0.8);
     this.updateScore(0);
@@ -48,6 +52,11 @@ export class UIScene extends Phaser.Scene {
       } else {
         this.heartSprites[i].setFrame('hud_heart_empty');
       }
+    }
+    if ((this as any).hpText) {
+      (this as any).hpText.setText('HP: ' + hp);
+    } else {
+      (this as any).hpText = this.add.text(40, 140, 'HP: ' + hp, { fontSize: '24px', color: '#ffffff' });
     }
   }
 

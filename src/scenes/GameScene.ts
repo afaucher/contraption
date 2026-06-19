@@ -303,6 +303,26 @@ export class GameScene extends Phaser.Scene {
       });
     });
 
+    this.matter.world.on('collisionactive', (event: Phaser.Physics.Matter.Events.CollisionActiveEvent) => {
+      event.pairs.forEach((pair) => {
+        const bodyA = pair.bodyA;
+        const bodyB = pair.bodyB;
+        let playerBody = null;
+        let otherBody = null;
+        if (bodyA === this.player.body) { playerBody = bodyA; otherBody = bodyB; }
+        else if (bodyB === this.player.body) { playerBody = bodyB; otherBody = bodyA; }
+        if (playerBody && otherBody) {
+          const sprite = otherBody.gameObject as Phaser.Physics.Matter.Sprite;
+          if (sprite && sprite.getData) {
+            const ent = sprite.getData('entityData') as EntityData;
+            if (ent && (ent.type === 'spike' || ent.type === 'water' || ent.type === 'spikeBall' || ent.type === 'weight')) {
+              this.handleEntityInteraction(sprite, ent);
+            }
+          }
+        }
+      });
+    });
+
     this.matter.world.on('collisionend', (event: Phaser.Physics.Matter.Events.CollisionEndEvent) => {
       event.pairs.forEach((pair) => {
         const bodyA = pair.bodyA;
