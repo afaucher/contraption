@@ -67,13 +67,13 @@ export class GameScene extends Phaser.Scene {
       this.debugGroup.getChildren().forEach((child: any) => child.setVisible(this.isDebugVisible));
     });
     
-    this.bgSky = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height, 'bg_cloud');
-    this.bgSky.setOrigin(0, 0);
+    this.bgSky = this.add.tileSprite(400, 300, 800, 600, 'bg_cloud');
+    this.bgSky.setOrigin(0.5, 0.5);
     this.bgSky.setScrollFactor(0);
     this.bgSky.setDepth(-10);
 
-    this.bgHills = this.add.tileSprite(0, this.cameras.main.height - 256, this.cameras.main.width, 256, 'bg_hills');
-    this.bgHills.setOrigin(0, 0);
+    this.bgHills = this.add.tileSprite(400, 600, 800, 256, 'bg_hills');
+    this.bgHills.setOrigin(0.5, 1.0);
     this.bgHills.setScrollFactor(0);
     this.bgHills.setDepth(-9);
 
@@ -531,9 +531,7 @@ export class GameScene extends Phaser.Scene {
 
     if (this.player) {
       this.player.update();
-      if (this.bgHills) {
-        this.bgHills.tilePositionX = this.cameras.main.scrollX * 0.5;
-      }
+
       
       if (this.touchingLadders > 0) {
         this.player.setIgnoreGravity(true);
@@ -568,11 +566,13 @@ export class GameScene extends Phaser.Scene {
       const viewW = this.cameras.main.width / this.currentZoom;
       const viewH = this.cameras.main.height / this.currentZoom;
       if (this.bgSky) {
-        this.bgSky.setSize(viewW, viewH);
+        this.bgSky.setScale(1 / this.currentZoom);
+        this.bgSky.tilePositionX = Math.round(this.cameras.main.scrollX * 0.1);
       }
       if (this.bgHills) {
-        this.bgHills.setSize(viewW, 256 / this.currentZoom);
-        this.bgHills.setY(viewH - 256 / this.currentZoom);
+        this.bgHills.setScale(1 / this.currentZoom);
+        this.bgHills.setPosition(400, 300 + 300 / this.currentZoom);
+        this.bgHills.tilePositionX = Math.round(this.cameras.main.scrollX * 0.5);
       }
 
       // Adjust camera bounds so zoomed-out view doesn't show outside the world
